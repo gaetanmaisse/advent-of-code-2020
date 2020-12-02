@@ -1,8 +1,8 @@
-import { countValidPasswordsWithMinMaxConstraint } from './day2';
+import { countValidPasswords, minMaxValidator } from './day2';
 import { input } from './day2.input';
 
 describe('Day2', () => {
-  describe('countValidPasswordsWithMinMaxConstraint', () => {
+  describe('Part 1', () => {
     describe('return the number of valid passwords according to the min-max constraints', () => {
       it('for the example', () => {
         const exampleInput = [
@@ -13,11 +13,11 @@ describe('Day2', () => {
           '17-18 d: ddddddddddddddddzn',
         ];
 
-        expect(countValidPasswordsWithMinMaxConstraint(exampleInput)).toBe(3);
+        expect(countValidPasswords(exampleInput, minMaxValidator)).toBe(3);
       });
 
       it('for the real input', () => {
-        expect(countValidPasswordsWithMinMaxConstraint(input)).toBe(465);
+        expect(countValidPasswords(input, minMaxValidator)).toBe(465);
       });
     });
   });
