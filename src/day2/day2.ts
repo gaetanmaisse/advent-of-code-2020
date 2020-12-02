@@ -36,3 +36,21 @@ export const minMaxValidator: PasswordValidator = ({
 
   return firstNumber <= charCount && charCount <= secondNumber;
 };
+
+export const positionValidator: PasswordValidator = ({
+  firstNumber,
+  secondNumber,
+  requiredChar,
+  password,
+}) => {
+  let matchingChar = 0;
+
+  if (password.charAt(firstNumber - 1) === requiredChar) {
+    matchingChar++;
+  }
+  if (password.charAt(secondNumber - 1) === requiredChar) {
+    matchingChar++;
+  }
+
+  return matchingChar === 1;
+};
