@@ -1,13 +1,17 @@
 const TREE = '#';
 
-export function getNbOfTreesOnTobogganPath(input: string): number {
+export function getNbOfTreesOnTobogganPath(
+  input: string,
+  xMov: number,
+  yMov: number,
+): number {
   const rows = input.split('\n');
   const mapHeight = rows.length;
 
   const cells = rows.map(row => Array.from(row));
   const mapWidth = cells[0].length;
 
-  const position = { x: 0, y: 0 };
+  const position = new PositionManager(xMov, yMov, mapWidth);
 
   let nbOfTree = 0;
 
@@ -16,9 +20,23 @@ export function getNbOfTreesOnTobogganPath(input: string): number {
       nbOfTree++;
     }
 
-    position.y += 1;
-    position.x = (position.x + 3) % mapWidth;
+    position.move();
   }
 
   return nbOfTree;
+}
+
+export class PositionManager {
+  public x = 0;
+  public y = 0;
+  constructor(
+    private readonly xMov: number,
+    private readonly yMov: number,
+    private readonly mapWidth: number,
+  ) {}
+
+  public move(): void {
+    this.x = (this.x + this.xMov) % this.mapWidth;
+    this.y += this.yMov;
+  }
 }
