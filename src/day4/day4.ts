@@ -1,4 +1,7 @@
-export function getNbOfValidPassport(input: string): number {
+export function getNbOfValidPassport(
+  input: string,
+  predicate: (passport: Partial<Passport>) => passport is Passport,
+): number {
   return input
     .split('\n\n')
     .map(row => row.replace(/\n/g, ' '))
@@ -11,10 +14,12 @@ export function getNbOfValidPassport(input: string): number {
         return acc;
       }, {} as Partial<Passport>);
     })
-    .filter(isValidPassport).length;
+    .filter(predicate).length;
 }
 
-function isValidPassport(passport: Partial<Passport>): passport is Passport {
+export function simplePasswordValidator(
+  passport: Partial<Passport>,
+): passport is Passport {
   return (
     !!passport.byr &&
     !!passport.iyr &&
@@ -34,5 +39,5 @@ interface Passport {
   hcl: string;
   ecl: string;
   pid: string;
-  cid: string;
+  cid?: string;
 }
