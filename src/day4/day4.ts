@@ -31,6 +31,62 @@ export function simplePasswordValidator(
   );
 }
 
+export function complexPasswordValidator(
+  passport: Partial<Passport>,
+): passport is Passport {
+  return (
+    validateDate(passport.byr, '1920', '2002') &&
+    validateDate(passport.iyr, '2010', '2020') &&
+    validateDate(passport.eyr, '2020', '2030') &&
+    validateHeight(passport.hgt) &&
+    validateHairColor(passport.hcl) &&
+    validateEyeColor(passport.ecl) &&
+    validatePasswordId(passport.pid)
+  );
+}
+
+export function validateDate(
+  inputDate: string | undefined,
+  minDate: string,
+  maxDate: string,
+): boolean {
+  if (!inputDate || inputDate.length !== 4) {
+    return false;
+  }
+  return minDate <= inputDate && inputDate <= maxDate;
+}
+
+export function validateHairColor(input: string | undefined): boolean {
+  return /#([0-9]|[a-f]){6}/.test(input ?? '');
+}
+
+export function validatePasswordId(input: string | undefined): boolean {
+  return /^[0-9]{9}$/.test(input ?? '');
+}
+
+export function validateEyeColor(input: string | undefined): boolean {
+  const validEyeColors = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'];
+
+  return validEyeColors.includes(input ?? '');
+}
+
+export function validateHeight(input: string | undefined): boolean {
+  if (!input) {
+    return false;
+  }
+
+  if (input.includes('cm')) {
+    const heightInCm = Number(input.split('cm')[0]);
+    return 150 <= heightInCm && heightInCm <= 193;
+  }
+
+  if (input.includes('in')) {
+    const heightInInches = Number(input.split('in')[0]);
+    return 59 <= heightInInches && heightInInches <= 76;
+  }
+  return false;
+}
+
 interface Passport {
   byr: string;
   iyr: string;
