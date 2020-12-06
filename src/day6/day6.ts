@@ -12,20 +12,18 @@ export function countNbOfQuestionEveryoneAnsweredYes(input: string): number {
     .split('\n\n')
     .map(answer => answer.split('\n'))
     .map(groupAnswers => {
-      const charMapping = {} as Record<string, number>;
-      groupAnswers
-        .map(groupAnswer => {
-          return Array.from(groupAnswer);
-        })
-        .forEach(groupAnswer => {
+      return groupAnswers
+        .map(groupAnswer => Array.from(groupAnswer))
+        .reduce((acc, groupAnswer) => {
           groupAnswer.forEach(char => {
-            charMapping[char] = (charMapping[char] ?? 0) + 1;
+            acc[char] = (acc[char] ?? groupAnswers.length) - 1;
           });
-        });
-
-      return Object.values(charMapping).filter(
-        value => value === groupAnswers.length,
-      ).length;
+          return acc;
+        }, {} as Record<string, number>);
     })
+    .map(charMapping => {
+      return Object.values(charMapping).filter(value => value === 0);
+    })
+    .map(answer => answer.length)
     .reduce((acc, curr) => acc + curr, 0); // ?
 }
