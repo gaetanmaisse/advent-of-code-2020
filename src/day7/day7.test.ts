@@ -1,8 +1,9 @@
 import {
+  getNbOfBagColorContainedInAShinyGoldBag,
   getNbOfBagColorThatCouldContainAShinyGoldBag,
   simpleParseBagRule,
 } from './day7';
-import { exampleInput, input } from './day7.input';
+import { exampleInput, exampleInput2, input } from './day7.input';
 
 describe('Day 7', () => {
   describe('Part 1', () => {
@@ -51,6 +52,20 @@ describe('Day 7', () => {
           color: 'faded blue',
           canContains: [],
         });
+      });
+    });
+  });
+  describe('Part 2', () => {
+    describe('getNbOfBagColorThatCouldContainAShinyGoldBag', () => {
+      it('for the example', () => {
+        expect(getNbOfBagColorContainedInAShinyGoldBag(exampleInput)).toBe(32);
+        expect(getNbOfBagColorContainedInAShinyGoldBag(exampleInput2)).toBe(
+          126,
+        );
+      });
+
+      it('for the input', () => {
+        expect(getNbOfBagColorContainedInAShinyGoldBag(input)).toBe(11261);
       });
     });
   });
