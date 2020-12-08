@@ -1,6 +1,7 @@
 import {
   applyInstruction,
   getAccumulatorValueBeforeInfiniteLoop,
+  getAccumulatorValueForFixedCode,
   parseInstruction,
 } from './day8';
 import { exampleInput, input } from './day8.input';
@@ -9,11 +10,15 @@ describe('Day 8', () => {
   describe('Part 1', () => {
     describe('getAccumulatorValueBeforeInfiniteLoop', () => {
       it('for the example', () => {
-        expect(getAccumulatorValueBeforeInfiniteLoop(exampleInput)).toBe(5);
+        expect(
+          getAccumulatorValueBeforeInfiniteLoop(exampleInput).accumulator,
+        ).toBe(5);
       });
 
       it('for the input', () => {
-        expect(getAccumulatorValueBeforeInfiniteLoop(input)).toBe(1137);
+        expect(getAccumulatorValueBeforeInfiniteLoop(input).accumulator).toBe(
+          1137,
+        );
       });
     });
 
@@ -74,6 +79,20 @@ describe('Day 8', () => {
             { code: 'nop', value: 0 },
           ),
         ).toEqual({ currentPosition: 5, accumulator: 15 });
+      });
+    });
+  });
+
+  describe('Part2', () => {
+    describe('getAccumulatorValueForFixedCode', () => {
+      it('for the example', () => {
+        expect(getAccumulatorValueForFixedCode(exampleInput).accumulator).toBe(
+          8,
+        );
+      });
+
+      it('for the input', () => {
+        expect(getAccumulatorValueForFixedCode(input).accumulator).toBe(1125);
       });
     });
   });
